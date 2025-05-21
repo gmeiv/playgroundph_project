@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Draw & Guess Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body background="bgbgbg.gif">
+  <h1>🍵 Matcha Draw & Guess</h1>
+
+  <div id="game">
+    <div id="wordPrompt" style="font-size: 1.5rem; margin-bottom: 10px; color: #5f9e8f;">
+      <strong>Draw:</strong> <span id="currentWordText">Loading...</span>
+    </div>
+
+    <div style="margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+      <label>
+        <input type="color" id="colorPicker" value="#000000">
+      </label>
+
+      <select id="penSize">
+        <option value="2">Thin</option>
+        <option value="5" selected>Medium</option>
+        <option value="10">Thick</option>
+        <option value="20">Extra Thick</option>
+      </select>
+
+      <button onclick="useEraser()">🧽 Eraser</button>
+      <button onclick="clearCanvas()">🗑️ Clear All</button>
+    </div>
+
+    <canvas id="drawArea" width="600" height="400"></canvas>
+
+     <div class="chat-box">
+      <div id="chatMessages"></div>
+
+      <div class="chat-input">
+        <input type="text" id="guess" placeholder="Enter your guess">
+        <button onclick="submitGuess()">Submit</button>
+      </div>
+    </div>
+  </div>
+
+    <div id="scoreDisplay" style="margin-top: 10px; font-size: 1.2rem; color: #5f9e8f;">Score: 0</div>
+  </div>
+
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>

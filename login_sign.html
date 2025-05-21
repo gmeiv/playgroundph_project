@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Register</title>
+  <link rel="stylesheet" href="login_sign.css" />
+</head>
+<body>
+  <div class="container">
+    <input type="checkbox" id="toggle" />
+    <div class="form-container">
+      <!-- Login Form -->
+      <form class="form login" action="login_sign.php" method="POST" id="login-form">
+        <h2>Login</h2>
+        <div id="login-error" class="error-msg"></div>
+        <input type="text" name="username" placeholder="Username" required id="login-username" />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="hidden" name="action" value="login" />
+        <div class="button-container">
+
+          <button type="submit" class="magic-button" id="magicButton">Login</button>
+        </div>
+        <label for="toggle">Don't have an account? <span>Register</span></label>
+      </form>
+
+      <!-- Register Form -->
+      <form class="form register" action="login_sign.php" method="POST" id="register-form">
+        <h2>Register</h2>
+        <div id="register-error" class="error-msg"></div>
+        <input type="text" name="username" placeholder="Username" required id="register-username" />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+        <input type="hidden" name="action" value="register" />
+        <div class="button-container">
+
+          <button type="submit" class="magic-button" id="magicButton">Register</button>
+        </div>
+        <label for="toggle">Already have an account? <span>Login</span></label>
+      </form>
+    </div>
+  </div>
+  <script src="login_sign.js"></script>
+
+</body>
+</html>

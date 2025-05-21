@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Draw & Guess Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f8f4;
+      color: #2e3d30;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #game {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      border: 2px solid #a8cbb7;
+      background-color: #fff;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 6px;
+      border: 1px solid #a8cbb7;
+    }
+
+    .chat-box {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: scroll;
+      border: 1px solid #a8cbb7;
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    #guess {
+      width: 60%;
+    }
+  </style>
+</head>
+<body background="bgbgbg.gif">
+  <h1>🍵 Matcha Draw & Guess</h1>
+
+  <div id="game">
+    <div id="wordPrompt" style="font-size: 1.5rem; margin-bottom: 10px; color: #5f9e8f;">
+      <strong>Draw:</strong> <span id="currentWordText">Loading...</span>
+    </div>
+
+    <div style="margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+      <label>
+        <input type="color" id="colorPicker" value="#000000">
+      </label>
+
+      <select id="penSize">
+        <option value="2">Thin</option>
+        <option value="5" selected>Medium</option>
+        <option value="10">Thick</option>
+        <option value="20">Extra Thick</option>
+      </select>
+
+      <button onclick="useEraser()">🧽 Eraser</button>
+      <button onclick="clearCanvas()">🗑️ Clear All</button>
+    </div>
+
+    <canvas id="drawArea" width="600" height="400"></canvas>
+
+    <div class="chat-box">
+      <div id="chatMessages"></div>
+
+      <div class="chat-input">
+        <input type="text" id="guess" placeholder="Enter your guess">
+        <button onclick="submitGuess()">Submit</button>
+      </div>
+    </div>
+
+    <div id="scoreDisplay" style="margin-top: 10px; font-size: 1.2rem; color: #5f9e8f;">Score: 0</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('drawArea');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let currentColor = document.getElementById('colorPicker').value;
+    let currentSize = parseInt(document.getElementById('penSize').value);
+    let lastX = 0;
+    let lastY = 0;
+
+    let currentWord = '';
+    let score = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+      drawing = true;
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mouseout', () => drawing = false);
+    canvas.addEventListener('mousemove', (e) => {
+      if (!drawing) return;
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = currentSize;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    document.getElementById('colorPicker').addEventListener('input', (e) => {
+      currentColor = e.target.value;
+    });
+
+    document.getElementById('penSize').addEventListener('change', (e) => {
+      currentSize = parseInt(e.target.value);
+    });
+
+    function useEraser() {
+      currentColor = '#ffffff';
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function fetchWord() {
+      fetch('game.php?action=get_word')
+        .then(res => res.json())
+        .then(words => {
+          if (words.error) {
+            console.error("Word fetch error:", words.error);
+            document.getElementById('currentWordText').innerText = "Error fetching word";
+            return;
+          }
+
+          if (!Array.isArray(words) || words.length === 0) {
+            document.getElementById('currentWordText').innerText = "No words found";
+            return;
+          }
+
+          currentWord = words[Math.floor(Math.random() * words.length)];
+          document.getElementById('currentWordText').innerText = currentWord;
+          document.getElementById('guess').value = '';
+          document.getElementById('guess').style.backgroundColor = '';
+        })
+        .catch(err => {
+          console.error("Fetch failed:", err);
+          document.getElementById('currentWordText').innerText = "Fetch error";
+        });
+    }
+
+    fetchWord();
+
+    function submitGuess() {
+      const guessInput = document.getElementById('guess');
+      const inputValue = guessInput.value.trim().toLowerCase();
+
+      if (inputValue === currentWord.toLowerCase()) {
+        guessInput.style.backgroundColor = '#c8f7c5';
+        score += 10;
+        document.getElementById('scoreDisplay').innerText = `Score: ${score}`;
+        fetchWord();
+      } else {
+        guessInput.style.backgroundColor = '#f8d7da';
+      }
+
+      fetch('game.php?action=get')
+        .then(res => res.json())
+        .then(data => {
+          data.guesses = data.guesses || [];
+          data.guesses.push(inputValue);
+          return fetch('game.php?action=set', {
+            method: 'POST',
+            body: JSON.stringify(data)
+          });
+        });
+    }
+
+    setInterval(() => {
+      fetch('game.php?action=get')
+        .then(res => res.json())
+        .then(data => {
+          console.log("Guesses:", data.guesses);
+        });
+    }, 3000);
+  </script>
+</body>
+</html>

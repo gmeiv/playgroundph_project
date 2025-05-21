@@ -1,0 +1,169 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: url('trainpixel.gif') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.container {
+  position: relative;
+  width: 350px;
+  background: rgba(20, 20, 60, 0.6);
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.form-container {
+  width: 200%;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+#toggle:checked ~ .form-container {
+  transform: translateX(-50%);
+}
+
+.form {
+  width: 50%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: rgba(80, 120, 255, 0.2);
+  color: lightgray;
+}
+
+input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: rgba(80, 120, 255, 0.2);
+  color: lightgray;
+}
+
+.form input::placeholder {
+  color: lightgray;
+}
+
+input::placeholder {
+  color: lightgray;
+}
+
+.form label {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+
+.form label span {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.error-msg {
+  color: rgb(250, 153, 250);
+  font-size: 13px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.form input.error {
+  border-color: red;
+}
+
+/* Magic button style */
+.magic-button {
+  position: relative;
+  padding: 12px; /* Adjusted to match the padding of the text box */
+  font-size: 14px; /* Adjusted to match the text box font size */
+  border: 1px solid #555; /* Add border like text box */
+  border-radius: 6px; /* Same radius as the text box */
+  cursor: pointer;
+  overflow: hidden;
+  color: lightgray;
+  background-color: rgba(80, 120, 255, 0.2);
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+  z-index: 1;
+  width: 100%; /* Ensures the button has the same width as the input */
+  margin-bottom: 15px; /* Adds space below the button, just like input fields */
+}
+
+.magic-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #2c187d, #6f6abe, #007bff);
+  border-radius: 6px; /* Same as input border radius */
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: -1;
+
+}
+
+.magic-button:hover::before {
+  opacity: 1;
+}
+
+.magic-button:hover {
+  box-shadow: 0 0 20px #00f0ff;
+}
+
+/* Star particles */
+.star {
+  position: absolute;
+  color: cyan;
+  font-size: 16px;
+  animation: sparkle 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(0.5);
+    opacity: 0;
+  }
+}

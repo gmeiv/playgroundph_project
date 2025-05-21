@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Action Completed</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url(fireworkspixel.gif) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .feedback-container {
+      background: rgba(20, 20, 60, 0.6);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 0px 25px rgba(0, 0, 0, 0.4);
+      max-width: 400px;
+      width: 90%;
+      backdrop-filter: blur(1px);
+    }
+
+    .feedback-icon {
+      font-size: 60px;
+      color: #4db6ac;
+      margin-bottom: 20px;
+      animation: pop 0.4s ease-out;
+    }
+
+    .feedback-message {
+      font-size: 22px;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .redirect-msg {
+      font-size: 14px;
+      color: #fbfbfb;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="feedback-container">
+    <div class="feedback-icon">✅</div>
+    <div class="feedback-message" id="message">Action completed successfully!</div>
+    <div class="redirect-msg">
+      Redirecting in <span id="countdown">3</span> seconds...
+    </div>
+  </div>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get('msg');
+    const redirect = params.get('redirect');
+
+    // Set message if provided
+    if (message) {
+      document.getElementById('message').textContent = decodeURIComponent(message);
+    }
+
+    // Countdown and redirect logic
+    let count = 3;
+    const countdown = document.getElementById('countdown');
+    countdown.textContent = count;
+
+    const interval = setInterval(() => {
+      count--;
+      countdown.textContent = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        // Redirect to provided target or fallback
+        window.location.href = redirect || "dashboard.php";
+      }
+    }, 1000);
+  });
+</script>
+</body>
+</html>

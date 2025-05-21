@@ -1,0 +1,221 @@
+ body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('moonpixel.gif') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      overflow-x: hidden;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 30px 30px;
+      display: flex;
+      align-items: center;
+      background: transparent; /* transparent header */
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0 0 0 10px;
+      color: white; /* make sure it's readable */
+      font-size: 24px;
+    }
+
+    /* Hamburger menu button on left */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 3px;
+      background-color: white; /* visible on dark background */
+      border-radius: 2px;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .welcome-msg {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .games-menu {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .game-card {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .game-card:hover {
+    box-shadow: 0 6px 14px rgb(0 0 0 / 0.15);
+    transform: scale(1.05); /* slightly increase size on hover */
+    }
+
+
+    .game-card h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.4rem;
+      color: white
+    }
+
+    .game-card p {
+      font-size: 1rem;
+      color: white
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: transparent;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .avatar-popup {
+      position: absolute;
+      top: 120px;
+      left: 20px;
+      background:  #34495e;
+      border: 2px solid #04128f;
+      padding: 15px;
+      border-radius: 10px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .avatar-options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .avatar-options img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s, border 0.2s;
+    }
+
+    .avatar-options img:hover {
+      transform: scale(1.1);
+      border: 2px solid #4db6ac;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    /* Side sliding panel */
+    #sidePanel {
+        position: fixed;
+        top: 100px;   /* changed from 0 to 60px (header height approx) */
+        left: -260px;
+        width: 260px;
+        height: calc(100% - 60px); /* full height minus header */
+        background-color: transparent; /* same dark blue with 60% opacity */
+        box-shadow: 2px 0 8px rgba(0,0,0,0);
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    #sidePanel.open {
+      left: 0;
+    }
+
+    #sidePanel .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      margin-top: 20px;
+    }
+
+    #sidePanel .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #4a90e2 url('https://cdn-icons-png.flaticon.com/512/149/149071.png') no-repeat center;
+      background-size: cover;
+      margin-right: 15px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    #sidePanel .username-text {
+      font-weight: 700;
+      font-size: 1.3rem;
+      user-select: text;
+      word-break: break-word;
+    }
+
+    #sidePanel button {
+      background: none;
+      border: none;
+      color: white;
+      text-align: left;
+      padding: 12px 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      transition: background-color 0.2s ease;
+    }
+
+    #sidePanel button:hover {
+      background-color: #34495e;
+    }
+
+    /* Shift main content when panel open */
+    body.panel-open main {
+      margin-left: 260px;
+    }
