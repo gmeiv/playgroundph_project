@@ -6,12 +6,11 @@
 }
 
 body {
-  background: url('trainpixel.gif') no-repeat center center fixed;
+  background: url('IMAGES_GIF/trainpixel.gif') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   color: white;
 }
 
@@ -167,3 +166,5 @@ input::placeholder {
     opacity: 0;
   }
 }
+
+
