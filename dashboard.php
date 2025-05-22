@@ -37,11 +37,6 @@ if ($row = mysqli_fetch_assoc($result)) {
 </head>
 <body>
 
-  
-<audio autoplay loop>
-  <source src="AUDIO/background_music.mp3" type="audio/mpeg">
-  </audio>
-
   <header>
     <div class="hamburger" id="hamburgerBtn" aria-label="Open menu" tabindex="0">
       <div></div>

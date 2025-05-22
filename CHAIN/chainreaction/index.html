@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chain Reaction Lobby</title>
+</head>
+<body>
+  <h1>Chain Reaction Lobby</h1>
+  <div id="roomList"></div>
+
+  <form id="createRoomForm">
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="text" id="roomCode" placeholder="Room Code" required>
+    <button>Create Room</button>
+  </form>
+
+  <script>
+    function loadRooms() {
+      fetch('lobby.php')
+        .then(res => res.json())
+        .then(data => {
+          const roomList = document.getElementById('roomList');
+          roomList.innerHTML = '';
+          Object.entries(data.rooms).forEach(([code, room]) => {
+            const div = document.createElement('div');
+            div.innerHTML = `Room: <b>${code}</b> - Players: ${room.players.join(', ')} - Status: ${room.status}`;
+            const btn = document.createElement('button');
+            btn.innerText = 'Join';
+            btn.onclick = () => {
+              const username = prompt("Enter your username:");
+              fetch('lobby.php', {
+                method: 'POST',
+                body: new URLSearchParams({ action: 'join', room: code, user: username })
+              }).then(() => {
+                window.location = `game.php?room=${code}&user=${username}`;
+              });
+            };
+            div.appendChild(btn);
+            roomList.appendChild(div);
+          });
+        });
+    }
+
+    document.getElementById('createRoomForm').onsubmit = e => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const room = document.getElementById('roomCode').value;
+      fetch('lobby.php', {
+        method: 'POST',
+        body: new URLSearchParams({ action: 'create', room, user: username })
+      }).then(() => {
+        window.location = `game.php?room=${room}&user=${username}`;
+      });
+    };
+
+    loadRooms();
+    setInterval(loadRooms, 5000);
+  </script>
+</body>
+</html>
