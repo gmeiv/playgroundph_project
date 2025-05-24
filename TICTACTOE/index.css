@@ -1,0 +1,159 @@
+/* assets/style.css */
+body {
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #dce3ff;
+    padding: 0;
+    flex-direction: column;
+}
+
+.game-modes {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.container {
+    background-color: rgba(15, 15, 40, 0.65); /* deeper semi-transparent night blue */
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    color: #f0f4ff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(120, 130, 255, 0.2);
+}
+
+h1 {
+    margin-bottom: 10px;
+    color: #b9c1ff;
+    text-shadow: 0 0 5px #6066ff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #5f6fe9;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(24, 28, 60, 0.9);
+    color: #e0e4ff;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #8c98ff;
+    box-shadow: 0 0 6px #9faeff;
+}
+
+.magicbutton {
+    position: relative;
+    padding: 12px; /* Adjusted to match the padding of the text box */
+    font-size: 14px; /* Adjusted to match the text box font size */
+    border: 1px solid #555; /* Add border like text box */
+    border-radius: 6px; /* Same radius as the text box */
+    cursor: pointer;
+    overflow: hidden;
+    color: lightgray;
+    background-color: rgba(80, 120, 255, 0.2);
+    transition: box-shadow 0.4s ease, transform 0.3s ease;
+    z-index: 1;
+    width: 100%; /* Ensures the button has the same width as the input */
+    margin-bottom: 15px;
+}
+
+.magicbutton::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #2c187d, #6f6abe, #007bff);
+    border-radius: 6px; /* Same as input border radius */
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+.magicbutton:hover::before {
+  opacity: 1;
+}
+
+.magicbutton:hover {
+  box-shadow: 0 0 20px #00f0ff;
+}
+
+.star {
+  position: absolute;
+  color: cyan;
+  font-size: 16px;
+  animation: sparkle 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #b8b8d9;
+}
+
+.lobby-options {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 80px;
+}
+
+.leaderboard-link {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.leaderboard-link a {
+    font-family: 'Rubik', sans-serif;
+    display: inline-block;
+    background-color: #7b6dff;
+    color: white;
+    padding: 12px 28px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(50, 60, 255, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.leaderboard-link a:hover {
+    background-color: #5a4df0;
+    transform: rotate(0deg) scale(1.05);
+}

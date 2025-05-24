@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Tic Tac Toe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        body {
+            margin: 0;
+            background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #dce3ff;
+        }
+        .home-wrapper {
+            display: flex;
+            width: 90%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .intro-container {
+            background-color: rgba(15, 15, 40, 0.65);
+            padding: 60px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            color: #f0f4ff;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(120, 130, 255, 0.25);
+        }
+
+        .intro-container h1 {
+            font-size: 48px;
+            color: #b9c1ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #6066ff;
+        }
+
+        .intro-container p {
+            font-size: 24px;
+            line-height: 1.6;
+            color: #dce3ff;
+            margin-bottom: 30px;
+        }
+
+        .magicbutton {
+            position: relative;
+            padding: 12px; /* Adjusted to match the padding of the text box */
+            font-size: 20px; /* Adjusted to match the text box font size */
+            border: 1px solid #555; /* Add border like text box */
+            border-radius: 6px; /* Same radius as the text box */
+            cursor: pointer;
+            overflow: hidden;
+            color: lightgray;
+            background-color: rgba(80, 120, 255, 0.2);
+            transition: box-shadow 0.4s ease, transform 0.3s ease;
+            z-index: 1;
+            width: 100%; /* Ensures the button has the same width as the input */
+            margin-bottom: 15px;
+        }
+
+        .magicbutton::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #2c187d, #6f6abe, #007bff);
+            border-radius: 6px; /* Same as input border radius */
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: -1;
+        }
+        .magicbutton:hover::before {
+        opacity: 1;
+        }
+
+        .magicbutton:hover {
+        box-shadow: 0 0 20px #00f0ff;
+        }
+
+        .star {
+        position: absolute;
+        color: cyan;
+        font-size: 16px;
+        animation: sparkle 1s ease-out forwards;
+        pointer-events: none;
+        }
+
+        @keyframes sparkle {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-40px) scale(0.5);
+            opacity: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="home-wrapper">
+        <div class="intro-container">
+            <h1>Welcome to Tic Tac Toe</h1>
+            <p>
+                Test your strategy in the classic game of Tic Tac Toe!<br><br>
+                Choose Multiplayer to challenge friends in real-time<br>
+                Play Vs Robot for a solo brain battle<br>
+                Track your wins on the leaderboard<br><br>
+                Ready to begin your journey to Tic Tac victory?
+            </p>
+            <a href="index.html" class="magicbutton">Start Game</a>
+        </div>
+    </div>
+</body>
+</html>

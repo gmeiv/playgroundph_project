@@ -1,4 +1,7 @@
 <?php
+
+include 'navabar.php';
+
 session_start();
 
 // Prevent caching
@@ -17,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" && isset($_SESSION["user"])) {
 
 // Database connection
 $dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "draw_game";
+$dbuser = "u778263593_root";
+$dbpass = "PlaygroundPH00";
+$dbname = "u778263593_playgroundph";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 if (!$conn) {

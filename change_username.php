@@ -1,11 +1,13 @@
 <?php
-session_start();
+include 'user_var.php';
+
 if (!isset($_SESSION['user'])) {
     header("Location: login_sign.php?mode=login");
     exit();
 }
 
-$db = mysqli_connect("localhost", "root", "", "draw_game");
+// Update to your actual database credentials
+$db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
 if (!$db) die("Connection failed.");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -39,8 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Change Username</title>
-<link rel="stylesheet" href="change.css">
 <link rel="stylesheet" href="login_sign.css">
+<link rel="stylesheet" href="change.css">
+
 </head>
 <body>
 

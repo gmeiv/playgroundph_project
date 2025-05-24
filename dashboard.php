@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$db = mysqli_connect("localhost", "root", "", "draw_game");
+$db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
 if (!$db) {
     die("Database connection failed.");
 }
@@ -74,27 +74,23 @@ if ($row = mysqli_fetch_assoc($result)) {
   </aside>
 
   <main>
-  <div class="welcome-msg" id="usernameMain"> Welcome, <?= $username ?>!</div>
+  <div class="welcome-msg" id="usernameMain">Welcome, <?= $username ?>!</div>
   <div class="games-menu">
-    <div class="game-card">
-      <h2>SCRBL</h2>
-      <p>Draw & Guess game to test your creativity.</p>
+    <div class="game-card" onclick="location.href='TICTACTOE/home.html'" style="cursor:pointer;">
+      <h2>Tic Tac Toe</h2>
+      <p>Play with X and O and get three in a row!</p>
     </div>
-    <div class="game-card">
-      <h2>Who's the Spy</h2>
-      <p>Find the spy in this social deduction game.</p>
+    <div class="game-card" onclick="location.href='CHAIN/home.php'" style="cursor:pointer;">
+      <h2>Chain Reaction</h2>
+      <p>Make the orbs explode to be a survivor!</p>
     </div>
   </div>
 </main>
 
-  <footer>
-    &copy; 2025 WebGame Hub. All rights reserved.
-  </footer>
-
   <script>
     const username = "<?= addslashes($username) ?>";
     document.getElementById('usernamePanel').textContent = username;
-    document.getElementById('usernameMain').textContent = username;
+    document.getElementById('usernameMain').textContent = "Welcome, " + username + "!";
 
     const avatarDiv = document.querySelector('.avatar');
 

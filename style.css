@@ -11,7 +11,7 @@ body {
   background-size: cover;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 nav {
@@ -79,10 +79,9 @@ h1{
   text-transform: uppercase;
 }
 
-
 main {
   flex-grow: 1;
-  padding: 40px 20px;
+  padding: 10px 10px;
   color: white;
   max-width: 900px;
   margin: 0 auto;

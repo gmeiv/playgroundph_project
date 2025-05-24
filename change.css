@@ -1,11 +1,12 @@
 body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: darkblue;
+      background: url("IMAGES_GIF/moonpixel.gif");
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
 
     .change-container {

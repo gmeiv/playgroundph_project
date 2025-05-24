@@ -5,7 +5,8 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$db = mysqli_connect("localhost", "root", "", "draw_game");
+// Use your actual database credentials
+$db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
 if (!$db) die("Connection failed.");
 
 $username = $_SESSION['user'];

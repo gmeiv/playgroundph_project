@@ -133,7 +133,7 @@ input::placeholder {
   cursor: pointer;
   overflow: hidden;
   color: lightgray;
-  background-color: rgba(80, 120, 255, 0.2);
+  background: linear-gradient(45deg, #2c187d, #6f6abe, #007bff);
   transition: box-shadow 0.4s ease, transform 0.3s ease;
   z-index: 1;
   width: 100%; /* Ensures the button has the same width as the input */
