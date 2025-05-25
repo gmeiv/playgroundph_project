@@ -13,8 +13,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Show appropriate error
   if (mode === 'login') {
-    const loginError = document.getElementById('login-error');
+    const loginError = document.getElementById("login-error");
     const loginUser = document.getElementById('login-username');
+
+    // Reset error messages and styles
+    loginError.style.display = 'none';
+    loginUser.classList.remove('error');
 
     if (error === 'nouser') {
       loginError.textContent = 'Username not found.';
@@ -23,12 +27,17 @@ window.addEventListener('DOMContentLoaded', () => {
     } else if (error === 'wrongpass') {
       loginError.textContent = 'Incorrect password.';
       loginError.style.display = 'block';
+      loginUser.classList.add('error');
     }
   }
 
   if (mode === 'register') {
     const registerError = document.getElementById('register-error');
     const registerUser = document.getElementById('register-username');
+
+    // Reset error messages and styles
+    registerError.style.display = 'none';
+    registerUser.classList.remove('error');
 
     if (error === 'exists') {
       registerError.textContent = 'Username already exists.';
@@ -44,12 +53,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
+// Magic button effects remain unchanged
 const magicButton = document.getElementById("magicButton");
 let starInterval = null;
 
 magicButton.addEventListener("mouseleave", () => {
-  // Start spawning stars continuously every 300ms
   if (!starInterval) {
     starInterval = setInterval(() => {
       createStar(magicButton);
@@ -58,7 +66,6 @@ magicButton.addEventListener("mouseleave", () => {
 });
 
 magicButton.addEventListener("mouseenter", () => {
-  // Optionally: Stop stars when hovered again
   if (starInterval) {
     clearInterval(starInterval);
     starInterval = null;

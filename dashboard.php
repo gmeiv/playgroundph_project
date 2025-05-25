@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
+$db = mysqli_connect("localhost", "root", "", "u778263593_playgroundph");
 if (!$db) {
     die("Database connection failed.");
 }
@@ -32,7 +32,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome - WebGame Hub</title>
+  <title>PLAYGROUNDPH</title>
   <link rel="stylesheet" href="dashboard.css"/>
 </head>
 <body>
@@ -54,7 +54,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     <button onclick="openAvatarPopup()">Change Avatar</button>
     <button onclick="location.href='change_password.php'">Change Password</button>
     <button onclick="location.href='change_username.php'">Change Name</button>
-    <button onclick="confirmDelete()">Delete Account</button>
+    <button onclick="location.href='delete_account.php'">Delete Account</button>
     <button onclick="location.href='logout.php'">Logout</button>
 
 
@@ -77,15 +77,18 @@ if ($row = mysqli_fetch_assoc($result)) {
   <div class="welcome-msg" id="usernameMain">Welcome, <?= $username ?>!</div>
   <div class="games-menu">
     <div class="game-card" onclick="location.href='TICTACTOE/home.html'" style="cursor:pointer;">
+      <img src="../nodbchain/IMAGES_GIF/ttt.png" alt="Tic Tac Toe Preview" class="game-image">
       <h2>Tic Tac Toe</h2>
       <p>Play with X and O and get three in a row!</p>
     </div>
     <div class="game-card" onclick="location.href='CHAIN/home.php'" style="cursor:pointer;">
+      <img src="../nodbchain/IMAGES_GIF/chain.png" alt="Chain Reaction Preview" class="game-image">
       <h2>Chain Reaction</h2>
       <p>Make the orbs explode to be a survivor!</p>
     </div>
   </div>
 </main>
+
 
   <script>
     const username = "<?= addslashes($username) ?>";

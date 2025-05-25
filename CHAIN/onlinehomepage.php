@@ -5,11 +5,34 @@
   <title>Chain Reaction Online - Play With Friends</title>
   <style>
     body {
-      background: radial-gradient(circle at center, #081028 0%, #061024 100%);
+      background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
       color: #eaf6ff;
       text-align: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 40px;
+      position: relative;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(0, 51, 102, 0.8);
+      color: #eaf6ff;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 80, 180, 0.3);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
     }
 
     h1 {
@@ -88,6 +111,8 @@
   </style>
 </head>
 <body>
+  <a href="home.php" class="back-button">← Back</a>
+
   <h1>Chain Reaction Online</h1>
 
   <div class="description">
@@ -106,8 +131,7 @@
 
   <script>
     document.getElementById('startGameBtn').addEventListener('click', () => {
-      // Redirect to the game page, can generate or pass room info later
-      window.location.href = 'homepage.php';
+      window.location.href = '../CHAIN/homepage.php';
     });
   </script>
 </body>

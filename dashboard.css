@@ -26,7 +26,7 @@
     header h1 {
       margin: 0 0 0 10px;
       color: white; /* make sure it's readable */
-      font-size: 24px;
+      font-size: 30px;
     }
 
     /* Hamburger menu button on left */
@@ -58,10 +58,11 @@
     }
 
     .welcome-msg {
-      font-size: 1.3rem;
+      font-size: 2.3rem;
       margin-bottom: 30px;
       text-align: center;
-      color: #ffffff;
+      color: #f0f8ff;
+      text-shadow: 0 0 8px #00ccff;
     }
 
     .games-menu {
@@ -71,27 +72,50 @@
       flex-wrap: wrap;
     }
 
+    @media (max-width: 768px) {
+      .games-menu {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .game-card {
+        width: 90%;  /* full width with padding on small screens */
+        max-width: 400px;
+      }
+    }
+
     .game-card {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-    border-radius: 8px;
-    padding: 30px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }
-
-  .game-card:hover {
-    box-shadow: 0 6px 14px rgb(0 0 0 / 0.15);
-    transform: scale(1.05); /* slightly increase size on hover */
+      width: 400px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 0;
+      background: rgba(20, 20, 60, 0.6);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      text-align: center;
+      margin: 12px;
     }
 
-
-    .game-card h2 {
-      margin: 0 0 10px 0;
-      font-size: 1.4rem;
-      color: white
+    .game-card:hover {
+      transform: scale(1.03);
+      background-color: rgba(15, 15, 52, 0.6);
     }
+
+    .game-image {
+      width: 100%;
+      height: 60%; /* occupy top half */
+      object-fit: cover;
+    }
+
+    .game-card h2,
+    .game-card p {
+      margin: 8px;
+      color: white;
+    }
+
 
     .game-card p {
       font-size: 1rem;
@@ -216,6 +240,7 @@
     }
 
     /* Shift main content when panel open */
-    body.panel-open main {
+    /*body.panel-open main {
       margin-left: 260px;
-    }
+    }*/
+

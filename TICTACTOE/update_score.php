@@ -1,5 +1,5 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=ttt_scores', 'root', '');
+$pdo = new PDO('mysql:host=localhost; dbname=u778263593_playgroundph', 'u778263593_root', 'PlaygroundPH00');
 
 $player = $_POST['player'] ?? '';
 $result = $_POST['result'] ?? '';
@@ -25,18 +25,18 @@ if (!$row) {
 }
 
 // Update stats
+// Update stats with new streak logic
 switch ($result) {
     case 'win':
         $row['wins']++;
-        $row['streak'] = $row['streak'] >= 0 ? $row['streak'] + 1 : 1;
+        $row['streak'] = $row['streak'] + 1;
         break;
     case 'loss':
         $row['losses']++;
-        $row['streak'] = $row['streak'] <= 0 ? $row['streak'] - 1 : -1;
+        $row['streak'] = 0;
         break;
     case 'draw':
         $row['draws']++;
-        // streak stays the same
         break;
     default:
         http_response_code(400);

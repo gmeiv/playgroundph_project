@@ -19,7 +19,7 @@ $player = htmlspecialchars($_GET['player'] ?? 'Player');
 
     <div class="controls">
         <button onclick="resetGame()">Restart</button>
-        <a href="index.php"><button>Home</button></a>
+        <a href="home.html"><button>Home</button></a>
     </div>
 
 

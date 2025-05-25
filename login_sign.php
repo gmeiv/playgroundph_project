@@ -1,7 +1,6 @@
 <?php
 
 include 'navabar.php';
-
 session_start();
 
 // Prevent caching
@@ -11,7 +10,6 @@ header("Pragma: no-cache");
 
 // Only redirect to dashboard if this is a GET request and the user is logged in
 if ($_SERVER["REQUEST_METHOD"] !== "POST" && isset($_SESSION["user"])) {
-    // But don't redirect if this is a redirect to action.html
     if (!isset($_GET["redirect"])) {
         header("Location: dashboard.php");
         exit;
@@ -37,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // During registration
     if ($action == "register") {
+        $email = trim($_POST["email"]);
         $confirm = $_POST["confirm_password"];
 
         if ($password !== $confirm) {
@@ -44,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $check_query = "SELECT * FROM users WHERE username=?";
+        $check_query = "SELECT * FROM users WHERE username=? OR email=?";
         $stmt = mysqli_prepare($conn, $check_query);
-        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
@@ -57,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Register new user
         $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $insert_query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $insert_query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($conn, $insert_query);
-        mysqli_stmt_bind_param($stmt, "ss", $username, $hashed);
+        mysqli_stmt_bind_param($stmt, "sss", $username, $hashed, $email);
 
         if (mysqli_stmt_execute($stmt)) {
             echo "<script>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,13 +5,38 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background: radial-gradient(circle at center, #0a1733 0%, #061024 100%);
+            background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
             color: #eaf6ff;
             text-align: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 40px 0;
             min-height: 100vh;
+            position: relative;
         }
+
+        /* Back button styles */
+        .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(0, 51, 102, 0.8);
+    color: #eaf6ff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 80, 180, 0.3);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
 
         h1 {
             font-size: 3em;
@@ -94,6 +118,8 @@
     </style>
 </head>
 <body>
+    <a href="../dashboard.php" class="back-button">← Dashboard</a>
+
     <h1> Chain Reaction </h1>
 
     <div class="description">

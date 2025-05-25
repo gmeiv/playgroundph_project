@@ -3,9 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login & Register</title>
+  <title>PLAYGROUNDPH</title>
   <link rel="stylesheet" href="login_sign.css" />
   <link rel="stylesheet" href="style.css">
+  <style>
+    .form-links {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .forgot-link {
+      color: rgb(24, 132, 248);
+      font-size: 0.9em;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .forgot-link:hover {
+      color: #fff;
+    }
+
+    span:hover{
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   
@@ -36,31 +57,30 @@
         <input type="password" name="password" placeholder="Password" required />
         <input type="hidden" name="action" value="login" />
         <div class="button-container">
-
           <button type="submit" class="magic-button" id="magicButton">Login</button>
         </div>
-        <label for="toggle">Don't have an account? <span>Register</span></label>
+        <div class="form-links">
+          <a onclick="window.location.href='forgot_password.php'" class="forgot-link">Forgot Password?</a>
+        </div>
+        <label for="toggle">Don't have an account? <span style="color: rgb(24, 132, 248);"><u>Register</u></span></label>
       </form>
-
       <!-- Register Form -->
       <form class="form register" action="login_sign.php" method="POST" id="register-form">
         <h2>Register</h2>
         <div id="register-error" class="error-msg"></div>
         <input type="text" name="username" placeholder="Username" required id="register-username" />
+        <input type="email" name="email" placeholder="Email" required />
         <input type="password" name="password" placeholder="Password" required />
         <input type="password" name="confirm_password" placeholder="Confirm Password" required />
-        <input type="hidden" name="action" value="register" />
+        <input type="hidden" name="action" value="register"/>
         <div class="button-container">
-
           <button type="submit" class="magic-button" id="magicButton">Register</button>
         </div>
-        <label for="toggle">Already have an account? <span>Login</span></label>
+        <label for="toggle">Already have an account? <span style="color: rgb(24, 132, 248);"><u>Login</u></span></label>
       </form>
     </div>
   </div>
-
 </main>
-  
     <script src="login_sign.js"></script>
 </body>
 </html>

@@ -1,11 +1,23 @@
 <?php
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
+
+// Initialize Pusher at the top
+$pusher = new Pusher\Pusher(
+    'f19facd60b851f60a0e3',
+    'e5f6a7b8c9d0e1f2a3b4', // Your Pusher secret
+    '1996214', // Your Pusher app_id
+    ['cluster' => 'ap1', 'useTLS' => true]
+);
 
 $room = $_POST['room'] ?? $_GET['room'] ?? null;
 $player = $_POST['player'] ?? null;
 $row = isset($_POST['row']) ? intval($_POST['row']) : null;
 $col = isset($_POST['col']) ? intval($_POST['col']) : null;
+$action = $_POST['action'] ?? null;
 
 $stateFile = "state_$room.json";
 if (!file_exists($stateFile)) {
@@ -50,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $player !== null && $row !== null &
             return 4;
         }
         function addOrb(&$state, $row, $col, $player) {
+            $state['scores'][$player] += 1; // +1 for placing
             $state['counts'][$row][$col]++;
             $state['owners'][$row][$col] = $player;
             $state['grid'][$row][$col] = str_repeat(getOrb($player), $state['counts'][$row][$col]);
@@ -59,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $player !== null && $row !== null &
             }
         }
         function explodeOrb(&$state, $row, $col, $player) {
+            $state['scores'][$player] += 6; // +6 for explosion
             $dirs = [[-1,0],[1,0],[0,-1],[0,1]];
             $state['counts'][$row][$col] = 0;
             $state['owners'][$row][$col] = -1;
@@ -77,15 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $player !== null && $row !== null &
 
         addOrb($state, $row, $col, $playerIdx);
 
-        // --- Recalculate scores for each player ---
-        foreach ($state['scores'] as $i => $_) {
-            $state['scores'][$i] = 0;
-        }
-        foreach ($state['owners'] as $r) {
-            foreach ($r as $owner) {
-                if ($owner !== -1) $state['scores'][$owner]++;
-            }
-        }
+      
 
         // Recalculate active players
         $activePlayers = [];
@@ -121,14 +127,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $player !== null && $row !== null &
             'cluster' => 'ap1',
             'useTLS' => true
         ]);
+        // In your POST move handling section, replace the Pusher trigger with:
         $pusher->trigger("room-$room", 'move-made', [
-            'board' => $state['grid'],
-            'next' => $players[$state['turn'] % count($players)],
-            'winner' => isset($state['winner']) ? $players[$state['winner']] : null,
+            'grid' => $state['grid'],
+            'owners' => $state['owners'],
+            'counts' => $state['counts'],
             'scores' => $state['scores'],
             'eliminated' => $state['eliminated'],
-            'players' => $players
+            'players' => $state['players'],
+            'turn' => $state['turn'],
+            'currentPlayer' => $state['players'][$state['turn'] % count($state['players'])],
+            'winner' => isset($state['winner']) ? $state['winner'] : null
         ]);
+
         echo json_encode([
             'success' => true,
             'scores' => $state['scores'],
@@ -137,6 +148,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $player !== null && $row !== null &
         ]);
         exit;
     }
+}
+
+// Winner detection (after you set $state['winner'])
+if (isset($state['winner'])) {
+    // Prepare winner data to broadcast
+    $winnerData = [
+        'winner' => $state['winner'],
+        'winnerName' => $state['players'][$state['winner']],
+        'scores' => $state['scores'],
+        'players' => $state['players']
+    ];
+    $pusher->trigger("room-$room", 'game-over', $winnerData);
+
+    // Remove room from lobby (if you're using lobby.json)
+    $lobbyFile = __DIR__ . '/lobby.json';
+    if (file_exists($lobbyFile)) {
+        $lobby = json_decode(file_get_contents($lobbyFile), true);
+        if (isset($lobby['rooms'][$room])) {
+            unset($lobby['rooms'][$room]);
+            file_put_contents($lobbyFile, json_encode($lobby));
+        }
+    }
+   
+    // --- Save scores to database ---
+   $db = new mysqli('localhost', 'u778263593_root', 'PlaygroundPH00', 'u778263593_playgroundph');
+if ($db->connect_error) {
+    file_put_contents('debug_db.log', "Connection failed: " . $db->connect_error . "\n", FILE_APPEND);
+} else {
+    foreach ($state['players'] as $i => $username) {
+        $score = isset($state['scores'][$i]) ? intval($state['scores'][$i]) : 0;
+        $isWinner = ($i == $state['winner']);
+
+        $query = "INSERT INTO chain_scores (player, wins, losses, draws, total_score) VALUES (
+            '" . $db->real_escape_string($username) . "',
+            " . ($isWinner ? 1 : 0) . ",
+            " . ($isWinner ? 0 : 1) . ",
+            0,
+            $score
+        ) ON DUPLICATE KEY UPDATE 
+            wins = wins + " . ($isWinner ? 1 : 0) . ",
+            losses = losses + " . ($isWinner ? 0 : 1) . ",
+            total_score = total_score + $score";
+
+    }
+    $db->close();
+}
+     register_shutdown_function(function() use ($stateFile) {
+        sleep(5); // Give clients time to see the winner
+        if (file_exists($stateFile)) unlink($stateFile);
+    });
+
+    header('Content-Type: application/json');
+    echo json_encode(array_merge($state, ['gameOver' => true]));
+    exit;
 }
 
 // GET: return state as JSON
@@ -151,31 +216,3 @@ echo json_encode([
     'winner' => isset($state['winner']) ? $state['winner'] : null
 ]);
 
-// Winner detection (after you set $state['winner'])
-if (isset($state['winner'])) {
-    // Notify clients of game over
-    $pusher->trigger("room-$room", 'move-made', [
-        'board' => $state['grid'],
-        'next' => null,
-        'winner' => $state['players'][$state['winner']]
-    ]);
-
-    // Wait a few seconds to let the winner be displayed
-    sleep(2);
-
-    // Remove the room from the lobby.json
-    $lobbyFile = __DIR__ . '/lobby.json';
-    if (file_exists($lobbyFile)) {
-        $lobby = json_decode(file_get_contents($lobbyFile), true);
-        if (isset($lobby['rooms'][$room])) {
-            unset($lobby['rooms'][$room]);
-            file_put_contents($lobbyFile, json_encode($lobby));
-        }
-    }
-
-    // Optionally, delete the state file for this room
-    if (file_exists($stateFile)) {
-        unlink($stateFile);
-    }
-    exit;
-}

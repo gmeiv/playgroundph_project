@@ -1,13 +1,15 @@
 <?php
 include 'user_var.php';
+session_start();
 if (!isset($_SESSION['user'])) {
     header("Location: login_sign.php?mode=login");
     exit();
 }
 
-// Update to your actual database credentials
 $db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
 if (!$db) die("Connection failed.");
+
+$successMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_SESSION['user'];
@@ -23,10 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($new === $confirm) {
             $hashed = password_hash($new, PASSWORD_DEFAULT);
             mysqli_query($db, "UPDATE users SET password='$hashed' WHERE username='$username'");
-            echo "<script>
-                localStorage.setItem('actionGraphic', 'password_changed');
-                window.location.href = 'action.html?redirect=dashboard.php&msg=Password%20changed%20successfully';
-            </script>";
+            header("Location: change_password.php?msg=Password changed successfully");
+            exit();
         } else {
             echo "<script>
                 sessionStorage.setItem('passwordMismatch', 'true');
@@ -46,14 +46,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Change Password</title>
+  <title>PLAYGROUNDPH</title>
   <link rel="stylesheet" href="login_sign.css">
   <link rel="stylesheet" href="change.css">
+  <style>
+    body {
+      background: url('IMAGES_GIF/moonpixel.gif') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .success {
+      color: #00ff99;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .error {
+      border: 2px solid red;
+    }
+  </style>
 </head>
 <body>
 
 <div class="change-container">
   <h2>Change Password</h2>
+
+  <?php if (isset($_GET['msg'])): ?>
+    <div class="success"><?= htmlspecialchars($_GET['msg']) ?></div>
+  <?php endif; ?>
+
   <form method="post" action="change_password.php" novalidate>
     <label for="current_password">Current Password</label>
     <input type="password" id="current_password" name="current_password" required autocomplete="current-password" />
@@ -63,11 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <label for="confirm_password">Confirm New Password</label>
     <input type="password" id="confirm_password" name="confirm_password" required autocomplete="new-password" />
- 
-    <div class="button-container">
 
-          <button type="submit" class="magic-button" id="magicButton">Change Password</button>
-        </div>
+    <div class="button-container">
+      <button type="submit" class="magic-button" id="magicButton">Change Password</button>
+    </div>
   </form>
 </div>
 

@@ -100,10 +100,35 @@ if (isset($_POST['load']) && file_exists($saveFile)) {
 }
 
 if (isset($_POST['reset'])) {
-    session_destroy();
-    header("Location: home.php");
+    // Reset all necessary game session variables
+    $_SESSION['turn'] = 0;
+    $_SESSION['winner'] = null;
+    $_SESSION['exploding'] = [];
+    $_SESSION['owners'] = array_fill(0, 6, array_fill(0, 9, -1));
+    $_SESSION['counts'] = array_fill(0, 6, array_fill(0, 9, 0));
+    $_SESSION['grid'] = array_fill(0, 6, array_fill(0, 9, ''));
+    $_SESSION['scores'] = array_fill(0, $_SESSION['players'], 0);
+    $_SESSION['eliminated'] = array_fill(0, $_SESSION['players'], false);
+    unset($_SESSION['show_winner']);
+
+    // Redirect to game.php again to avoid form resubmission
+    header("Location: index.php");
     exit();
 }
+
+if (isset($_POST['restart'])) {
+    $players = $_SESSION['players'];
+    $_SESSION['turn'] = 0;
+    $_SESSION['grid'] = array_fill(0, 6, array_fill(0, 9, ""));
+    $_SESSION['counts'] = array_fill(0, 6, array_fill(0, 9, 0));
+    $_SESSION['owners'] = array_fill(0, 6, array_fill(0, 9, -1));
+    $_SESSION['scores'] = array_fill(0, $players, 0);
+    $_SESSION['eliminated'] = array_fill(0, $players, false);
+    unset($_SESSION['winner'], $_SESSION['show_winner']);
+    header("Location: game_online.php");
+    exit();
+}
+
 
 if (isset($_POST['row']) && isset($_POST['col'])) {
     $row = $_POST['row'];

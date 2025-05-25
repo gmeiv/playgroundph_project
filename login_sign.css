@@ -19,6 +19,16 @@ body {
   height: 100vh;
 }
 
+@media (max-width: 400px) {
+  .container {
+    width: 90%;
+    padding: 20px 10px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+}
 
 h1 {
   font-size: 2.5em;
@@ -105,11 +115,8 @@ input::placeholder {
   cursor: pointer;
 }
 
-
-
 .form label span {
-  color: #007bff;
-  text-decoration: underline;
+  cursor: pointer;
 }
 
 .error-msg {
@@ -164,6 +171,12 @@ input::placeholder {
   box-shadow: 0 0 20px #00f0ff;
 }
 
+.magic-button:focus {
+  outline: 2px solid #00f0ff;
+  outline-offset: 2px;
+}
+
+
 /* Star particles */
 .star {
   position: absolute;
@@ -183,4 +196,3 @@ input::placeholder {
     opacity: 0;
   }
 }
-

@@ -7,6 +7,7 @@ $pusher = new Pusher\Pusher(
     "1996214",
     [
         'cluster' => 'ap1',
-        'useTLS' => true
+        'useTLS' => true,
+        'encrypted' => true
     ]
 );

@@ -6,12 +6,34 @@
     <title>Setup Game - Chain Reaction Offline</title>
     <style>
         body {
-            background: radial-gradient(circle at center, #081028 0%, #061024 100%);
+            background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
             color: #eaf6ff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             padding: 40px 20px;
             min-height: 100vh;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 51, 102, 0.8);
+            color: #eaf6ff;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 80, 180, 0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
         }
 
         h2 {
@@ -56,7 +78,7 @@
             border-radius: 12px;
             border: 1.5px solid #2a5dbe;
             background: rgba(40, 80, 180, 0.22);
-            color:rgb(106, 138, 220);
+            color: rgb(106, 138, 220);
             font-weight: bold;
             cursor: pointer;
             -webkit-appearance: none;
@@ -120,13 +142,14 @@
             transform: scale(1.05);
         }
 
-        /* Remove default dropdown arrow for cleaner look */
         select::-ms-expand {
             display: none;
         }
     </style>
 </head>
 <body>
+    <a href="home.php" class="back-button">← Back</a>
+
     <h2>Chain Reaction Offline</h2>
 
     <div class="explanation">

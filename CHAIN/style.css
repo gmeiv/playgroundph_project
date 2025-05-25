@@ -1,9 +1,9 @@
 body {
-    background: radial-gradient(circle at center, #081028 0%, #061024 100%);
+    background: url('../IMAGES_GIF/payrplay.gif') no-repeat center center fixed;
+    background-size: cover;
     color: #eaf6ff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-   
+    text-align: center;  
 }
 
 .board {
