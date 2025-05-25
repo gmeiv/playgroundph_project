@@ -1,6 +1,5 @@
 <?php
 
-include 'navabar.php';
 session_start();
 
 // Prevent caching

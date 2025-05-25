@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$db = mysqli_connect("localhost", "root", "", "u778263593_playgroundph");
+$db = mysqli_connect("localhost", "u778263593_root", "PlaygroundPH00", "u778263593_playgroundph");
 if (!$db) {
     die("Database connection failed.");
 }
